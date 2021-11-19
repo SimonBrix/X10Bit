@@ -1,4 +1,5 @@
 #pragma once
+#include "Data.hpp"
 
 class X10
 {

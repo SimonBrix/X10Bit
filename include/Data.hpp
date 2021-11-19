@@ -6,7 +6,7 @@ class Data
 public:
 	Data(void* dataPtr, uint8_t bitCount);
 
-	void setData(const void* dataPtr, uint8_t bitCount);
+	void setData(void* dataPtr, uint8_t bitCount);
 	const void* getData() const;
 
 	uint8_t getBitCount() const;
