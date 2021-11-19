@@ -6,8 +6,10 @@
 class X10Bit
 {
 public:
-	X10Bit(int inf);
+	X10Bit();
 	~X10Bit();
-	void write(int data);
-	virtual void onRecieve(bool bit) const;
+	virtual void write(int data);
+	virtual void onRecieve() const;
+	void test() const;
+
 };
