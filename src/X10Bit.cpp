@@ -1,6 +1,6 @@
 #include "X10Bit.hpp"
 
-static int s_data;
+volatile static int s_data;
 
 static X10Bit* X10Ptr = 0;
 
@@ -29,13 +29,12 @@ X10Bit::X10Bit()
 
 void X10Bit::write(int data) 
 {
-	//s_data = data;
-	onRecieve();
+	s_data = data;
 }
 
 void X10Bit::onRecieve() const
 {
-	//PORTB ^= 0b10000000;
+	PORTB ^= 0b01000000;
 }
 
 void X10Bit::test() const

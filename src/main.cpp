@@ -11,9 +11,9 @@ extern "C" {
   void __cxa_guard_abort (__guard *) {};
 }*/
 
-/*extern "C" {
+extern "C" {
   void __cxa_pure_virtual(void) {};
-}*/
+}
 
 int main()
 {
@@ -23,7 +23,8 @@ int main()
 	PORTB = 0x00;
 
 	X10Proto x10;
-	x10.write(0b10101);
+	x10.write(0b111001010);
+	//x10.test();
 	while(1)
 	{}
 }
