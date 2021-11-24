@@ -6,7 +6,7 @@ static X10Bit* X10Ptr = 0;
 
 ISR(INT2_vect)
 {
-	if ((1 & s_data) == 1) 
+	/*if ((1 & s_data) == 1) 
 	{
 		PORTB |= 0b00000001;
 	}
@@ -15,9 +15,9 @@ ISR(INT2_vect)
 		PORTB &= 0b11111110;
 	}
 	
-	s_data = s_data >> 1;
-	X10Ptr->test();
+	s_data = s_data >> 1;*/
 
+	X10Ptr->test();
 }
 
 X10Bit::X10Bit() 
