@@ -3,7 +3,7 @@
 X10Proto::X10Proto() 
 : X10Bit()
 {
-	X10Bit::test();
+	//X10Bit::test();
 }
 
 void X10Proto::write(int data) 
