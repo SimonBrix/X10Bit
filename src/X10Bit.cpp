@@ -66,8 +66,8 @@ X10Bit::X10Bit()
         
 	
 	// Init Timer 5
-		// CTC mode and Prescaler = 1
-		TCCR5A = 0b00000000;
+		// CTC mode, Toggle OC5A and Prescaler = 1
+		TCCR5A = 0b01000000;
 		TCCR5B = 0b00001001;
 		OCR5A = 66; // 120 kHz
 }
