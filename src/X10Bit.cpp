@@ -77,13 +77,15 @@ X10Bit::~X10Bit()
 	
 }
 
-void X10Bit::write(Data bitData) 
+void X10Bit::write(int x, int bits) 
 {
     // Save bitData to variable
-	s_data = *(bitData.getData<long>());
+	/*s_data = *(bitData.getData<long>());
 
-	dataLeft = bitData.getBitCount();
+	dataLeft = bitData.getBitCount();*/
     
+	s_data = x;
+	dataLeft = bits;
     // Set internal flag;
     isSending_flag = 1;
 }
@@ -93,10 +95,10 @@ bool X10Bit::isSending()
 	return isSending_flag;
 }
 
-void X10Bit::simulate(Data bits) 
+/*void X10Bit::simulate(Data bits) 
 {
 	
-}
+}*/
 
 void X10Bit::onReceiveBit(bool bit) 
 {
