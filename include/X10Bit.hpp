@@ -8,8 +8,10 @@ class X10Bit
 public:
 	X10Bit();
 	~X10Bit();
-	virtual void write(int data);
-	virtual void onRecieve() const;
-	void test() const;
-
+	void write(Data bitData);
+	bool isSending();
+	void simulate(Data bits);
+	virtual void onReceiveBit(bool bit);
+private:
+	bool isSending_flag;
 };
