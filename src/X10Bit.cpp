@@ -6,7 +6,8 @@ static uint8_t dataLeft;
 
 static X10Bit* X10Ptr = 0;
 
-ISR(INT4_vect)
+// ZeroCross
+ISR(INT4_vect) 
 {
 	// 1ms delay => Sending bit
 	if(dataLeft != 0)
@@ -54,6 +55,9 @@ X10Bit::X10Bit()
 	// Init timers and interupts
     DDRL |= (1 << 6);
 	sei();
+
+	EIMSK |= (1 << INT4);
+	EICRB |= (1 << ISC40);
 
     // Init Timer 4
         // Normal mode and Prescaler = 1
