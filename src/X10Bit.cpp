@@ -1,6 +1,6 @@
 #include "X10Bit.hpp"
 
-static long s_data;
+static uint64_t s_data;
 
 static uint8_t dataLeft;
 
@@ -9,10 +9,13 @@ static X10Bit* X10Ptr = 0;
 // ZeroCross
 ISR(INT4_vect) 
 {
+	PORTB ^= 0xF0;
+	
 	// 1ms delay => Sending bit
+	
 	if(dataLeft != 0)
 	{
-		if (s_data & (1 << dataLeft-1))
+		if (s_data & ((uint64_t)1 << (dataLeft-1)))
 		{
 			// Enable CTC-signal
 			TCCR5A |= (1 << COM1A0);
@@ -24,12 +27,13 @@ ISR(INT4_vect)
 		}
 		dataLeft--;
 	}
-
+	
 	
     // 0.5ms delay => Recieving bit
 	TIFR4 = (1 << OCF4B);
 	OCR4B = TCNT4 + 8000; // 0.5 ms
 	TIMSK4 |= (1 << OCIE4B);
+	
 }
 
 //Stop sending
@@ -49,12 +53,16 @@ ISR(TIMER4_COMPB_vect)
 }
 
 X10Bit::X10Bit() 
-{
+{	
+	DDRB = 0xFF;
+	
+	PORTB = 0x00;
+	
 	X10Ptr = this;
 	
 	// Init timers and interupts
-    DDRL |= (1 << 6);
-	sei();
+    // DDRL |= (1 << 6);
+	DDRL = 0b10111111;
 
 	EIMSK |= (1 << INT4);
 	EICRB |= (1 << ISC40);
@@ -63,6 +71,7 @@ X10Bit::X10Bit()
         // Normal mode and Prescaler = 1
         TCCR4A = 0b00000000;
         TCCR4B = 0b00000001;
+		TIMSK4 = 0x00;
         
 	
 	// Init Timer 5
@@ -70,6 +79,8 @@ X10Bit::X10Bit()
 		TCCR5A = 0b01000000;
 		TCCR5B = 0b00001001;
 		OCR5A = 66; // 120 kHz
+		TCCR5A &= ~(1 << COM1A0);
+
 }
 
 X10Bit::~X10Bit() 
@@ -77,7 +88,7 @@ X10Bit::~X10Bit()
 	
 }
 
-void X10Bit::write(int x, int bits) 
+void X10Bit::write(uint64_t x, uint8_t bits) 
 {
     // Save bitData to variable
 	/*s_data = *(bitData.getData<long>());
@@ -102,5 +113,12 @@ bool X10Bit::isSending()
 
 void X10Bit::onReceiveBit(bool bit) 
 {
-	
+	if (bit == true)
+	{
+		PORTB |= 0x0F;
+	}
+	else
+	{
+		PORTB &= ~0x0F;
+	}
 }
