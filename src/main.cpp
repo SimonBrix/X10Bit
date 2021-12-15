@@ -23,9 +23,11 @@ int main()
 	//uint64_t x = 0b1100010110000111101010101001100110000111101010101001100110001111;
 //	uint64_t x = 9113429;
 	uint64_t x = 0xaaaaaaaaaaaaaaaa;
+	
+	Data data1(&x,64);
 
 	
-	X10.write(x, 64);
+	X10.write(data1);
 	while(1)
 	{	}
 }

@@ -1,6 +1,7 @@
-#include "Data.h"
+#include "Data.hpp"
 
-#include <cstdlib>
+#include <stdlib.h>
+//#include <cstdlib>
 
 Data::Data() {
 	pointer_ = nullptr;

@@ -27,6 +27,10 @@ ISR(INT5_vect)
 		}
 		dataLeft--;
 	}
+	else
+	{
+		X10Ptr->setisSending_flag(false);
+	}
 	
 	
     // 0.5ms delay => Recieving bit
@@ -54,6 +58,10 @@ ISR(TIMER4_COMPB_vect)
 
 X10Bit::X10Bit() 
 {	
+	DDRK = 0xFF;
+	
+	PORTK = 0x00;
+	
 	DDRK = 0xFF;
 	
 	PORTK = 0x00;
@@ -88,15 +96,13 @@ X10Bit::~X10Bit()
 	
 }
 
-void X10Bit::write(uint64_t x, uint8_t bits) 
+void X10Bit::write(Data &bitData) 
 {
     // Save bitData to variable
-	//s_data = *(bitData.getData<uint64_t>());
+	s_data = *(bitData.getData<uint64_t>());
 
-	//dataLeft = bitData.getBitCount();
+	dataLeft = bitData.getBitCount();
     
-	s_data = x;
-	dataLeft = bits;
     // Set internal flag;
     isSending_flag = 1;
 }
@@ -104,6 +110,16 @@ void X10Bit::write(uint64_t x, uint8_t bits)
 bool X10Bit::isSending() 
 {
 	return isSending_flag;
+}
+
+bool X10Bit::getisSending_flag()
+{
+	return isSending_flag;
+}
+
+void X10Bit::setisSending_flag(bool flag)
+{
+	isSending_flag = flag;
 }
 
 /*void X10Bit::simulate(Data bits) 
