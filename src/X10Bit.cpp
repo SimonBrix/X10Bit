@@ -7,9 +7,9 @@ static uint8_t dataLeft;
 static X10Bit* X10Ptr = 0;
 
 // ZeroCross
-ISR(INT4_vect) 
+ISR(INT5_vect) 
 {
-	PORTB ^= 0xF0;
+	PORTK ^= 0x0F;
 	
 	// 1ms delay => Sending bit
 	
@@ -54,9 +54,13 @@ ISR(TIMER4_COMPB_vect)
 
 X10Bit::X10Bit() 
 {	
-	DDRB = 0xFF;
+	DDRK = 0xFF;
 	
-	PORTB = 0x00;
+	PORTK = 0x00;
+	
+	DDRK = 0xFF;
+	
+	PORTK = 0x00;
 	
 	X10Ptr = this;
 	
@@ -64,8 +68,8 @@ X10Bit::X10Bit()
     // DDRL |= (1 << 6);
 	DDRL = 0b10111111;
 
-	EIMSK |= (1 << INT4);
-	EICRB |= (1 << ISC40);
+	EIMSK |= (1 << INT5);
+	EICRB |= (1 << ISC50);
 
     // Init Timer 4
         // Normal mode and Prescaler = 1
@@ -91,9 +95,9 @@ X10Bit::~X10Bit()
 void X10Bit::write(uint64_t x, uint8_t bits) 
 {
     // Save bitData to variable
-	/*s_data = *(bitData.getData<long>());
+	//s_data = *(bitData.getData<uint64_t>());
 
-	dataLeft = bitData.getBitCount();*/
+	//dataLeft = bitData.getBitCount();
     
 	s_data = x;
 	dataLeft = bits;
@@ -115,10 +119,10 @@ void X10Bit::onReceiveBit(bool bit)
 {
 	if (bit == true)
 	{
-		PORTB |= 0x0F;
+		PORTK |= 0xF0;
 	}
 	else
 	{
-		PORTB &= ~0x0F;
+		PORTK &= ~0xF0;
 	}
 }
