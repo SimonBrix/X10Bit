@@ -63,6 +63,7 @@ X10Bit::X10Bit()
         // Normal mode and Prescaler = 1
         TCCR4A = 0b00000000;
         TCCR4B = 0b00000001;
+		TIMSK4 = 0x00;
         
 	
 	// Init Timer 5
