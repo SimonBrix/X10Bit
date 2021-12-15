@@ -1,6 +1,7 @@
 #pragma once
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "Data.hpp"
 
 /// <summary> Utilizes timers and interrupts to send X10 data </summary>
 class X10Bit
