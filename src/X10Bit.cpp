@@ -91,10 +91,6 @@ X10Bit::X10Bit()
 
 }
 
-X10Bit::~X10Bit() 
-{
-	
-}
 
 void X10Bit::write(Data &bitData) 
 {
@@ -121,11 +117,6 @@ void X10Bit::setisSending_flag(bool flag)
 {
 	isSending_flag = flag;
 }
-
-/*void X10Bit::simulate(Data bits) 
-{
-	
-}*/
 
 void X10Bit::onReceiveBit(bool bit) 
 {
