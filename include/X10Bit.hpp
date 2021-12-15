@@ -5,6 +5,7 @@
 class X10Bit
 {
 public:
+	
 	X10Bit();
 	~X10Bit();
 	void write(uint64_t , uint8_t);

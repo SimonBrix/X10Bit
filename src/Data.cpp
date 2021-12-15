@@ -1,4 +1,6 @@
-#include "Data.hpp"
+#include "Data.h"
+
+#include <cstdlib>
 
 Data::Data() {
 	pointer_ = nullptr;
@@ -26,7 +28,7 @@ Data::Data(const void* const& pointer, const uint8_t& copyBitCount, const uint8_
 }
 
 Data::~Data() {
-	if (pointerCapacity_ > 0) delete[] pointer_;
+	if (pointerCapacity_ > 0) free(pointer_);
 }
 
 const void* Data::getData() const {
@@ -58,18 +60,18 @@ void Data::setData(const void* const& pointer, const uint8_t& bitCount) {
 void Data::resize(const uint8_t& newBitCount, const bool& keepValues) {
 	const uint8_t newByteCount = (newBitCount + 7) / 8;
 
-	if (newByteCount > pointerCapacity_)  {
-		uint8_t* const newPointer = new uint8_t[newByteCount];
+	if (newByteCount > pointerCapacity_) {
+		uint8_t* const newPointer = (uint8_t*)malloc(newByteCount);
 		
 		//Delete old pointer
 		if (pointerCapacity_ > 0) {
 			if (keepValues) {
 				uint8_t copyByteCount = (pointerCapacity_ < newByteCount) ? pointerCapacity_ : newByteCount;
 				for (uint8_t i = 0; i < copyByteCount; i++) {
-					newPointer[i] = (pointer_)[i];
+					newPointer[i] = pointer_[i];
 				}
 			}
-			delete[] pointer_;
+			free(pointer_);
 		}
 
 		pointer_ = newPointer;
