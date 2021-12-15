@@ -58,10 +58,6 @@ X10Bit::X10Bit()
 	
 	PORTK = 0x00;
 	
-	DDRK = 0xFF;
-	
-	PORTK = 0x00;
-	
 	X10Ptr = this;
 	
 	// Init timers and interupts
